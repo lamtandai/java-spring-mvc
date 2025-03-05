@@ -26,14 +26,14 @@ public class UserController {
         return "hello";
     }
 
-    @RequestMapping("/admin/user")
+    @RequestMapping("/admin/user/create")
     public String createUser(Model model) {
         model.addAttribute("newUser", new User());
         return "admin/user/createUser";
     }
 
     @RequestMapping(value = "/admin/user/createUser1", method = RequestMethod.POST)
-    public String getUser(Model model, @ModelAttribute("newUser") User newUser) {
+    public String saveUser(Model model, @ModelAttribute("newUser") User newUser) {
         this.userService.handleSaveUser(newUser);
         return "hello";
     }
