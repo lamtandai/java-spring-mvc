@@ -1,6 +1,8 @@
 package vn.hoidanit.laptopshop.domain;
 
 import jakarta.persistence.*;
+
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -16,10 +18,12 @@ public abstract class BaseEntity {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
     
+    @CreationTimestamp
     @CreatedDate
     @Column(updatable = false, nullable = false)
     private Instant createdAt;
 
+    @CreationTimestamp
     @LastModifiedDate
     @Column(nullable = false)
     private Instant updatedAt;

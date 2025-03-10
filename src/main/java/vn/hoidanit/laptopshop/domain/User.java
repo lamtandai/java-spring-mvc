@@ -1,9 +1,6 @@
 package vn.hoidanit.laptopshop.domain;
 
 import java.util.List;
-
-import org.hibernate.annotations.ManyToAny;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -67,6 +64,21 @@ public class User extends BaseEntity{
         return "User [id=" + getId() + ", fullName=" + fullName + ", email=" + email + ", password=" + password
                 + ", address=" + address + ", phone=" + phone + ", avatar=" + avatar + ", getFormattedCreatedAt()="
                 + getFormattedCreatedAt() + ", getFormattedUpdatedAt()=" + getFormattedUpdatedAt() + "]";
+    }
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+    public Role getRole() {
+        return role;
+    }
+    public void setRole(Role role) {
+        this.role = role;
+    }
+    public List<Order> getOrders() {
+        return orders;
+    }
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     

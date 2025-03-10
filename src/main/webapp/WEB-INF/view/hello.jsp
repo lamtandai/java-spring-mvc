@@ -8,6 +8,8 @@
     <title>Document</title>
 </head>
 <body>
+    
+    <jsp:include page="admin/layout/header.jsp"/>
     get newUser successfully!
 </body>
 </html>

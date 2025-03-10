@@ -11,8 +11,7 @@ public class Product extends BaseEntity {
     private String pro_name;
     private double price;
     private String image;
-    private String pro_detail_desc;
-    private String pro_short_desc;
+    
     private long quantity;
     private long sold;
     private String manufactor;
@@ -42,21 +41,6 @@ public class Product extends BaseEntity {
         this.image = image;
     }
 
-    public String getPro_detail_desc() {
-        return pro_detail_desc;
-    }
-
-    public void setPro_detail_desc(String pro_detail_desc) {
-        this.pro_detail_desc = pro_detail_desc;
-    }
-
-    public String getPro_short_desc() {
-        return pro_short_desc;
-    }
-
-    public void setPro_short_desc(String pro_short_desc) {
-        this.pro_short_desc = pro_short_desc;
-    }
 
     public long getQuantity() {
         return quantity;
@@ -93,8 +77,7 @@ public class Product extends BaseEntity {
     @Override
     public String toString() {
         return "Product [id=" + getId() + ", pro_name=" + pro_name + ", price=" + price + ", image=" + image
-                + ", pro_detail_desc=" + pro_detail_desc + ", pro_short_desc=" + pro_short_desc + ", quantity="
-                + quantity + ", sold=" + sold + ", manufactor=" + manufactor + ", target=" + target
+                +", quantity=" + quantity + ", sold=" + sold + ", manufactor=" + manufactor + ", target=" + target
                 + ", getFormattedCreatedAt()=" + getFormattedCreatedAt() + ", getFormattedUpdatedAt()="
                 + getFormattedUpdatedAt() + "]";
     }
