@@ -4,15 +4,19 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import vn.hoidanit.laptopshop.domain.Role;
 import vn.hoidanit.laptopshop.domain.User;
+import vn.hoidanit.laptopshop.repository.RoleRepo;
 import vn.hoidanit.laptopshop.repository.UserRepo;
 
 @Service
 public class UserService {
     private final UserRepo userRepo;
+    private final RoleRepo roleRepo;
 
-    UserService(UserRepo userRepo){
+    UserService(UserRepo userRepo, RoleRepo roleRepo ){
         this.userRepo = userRepo;
+        this.roleRepo = roleRepo;
     }
     public String handleHelloWord(){
         return "Hello from User service";
@@ -34,5 +38,8 @@ public class UserService {
     }
     public User handleGetUserById(long id){
         return this.userRepo.findById(id);
+    }
+    public Role handleGetRoleByName(String name){
+        return this.roleRepo.findByroleName(name);
     }
 }

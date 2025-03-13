@@ -1,14 +1,13 @@
 package vn.hoidanit.laptopshop.domain;
 
 import jakarta.persistence.Entity;
-
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "products")
 public class Product extends BaseEntity {
 
-    private String pro_name;
+    private String proName;
     private double price;
     private String image;
     
@@ -17,12 +16,14 @@ public class Product extends BaseEntity {
     private String manufactor;
     private String target;
 
-    public String getPro_name() {
-        return pro_name;
-    }
+    private String detailDesc;
+    private String shortDesc;
 
-    public void setPro_name(String pro_name) {
-        this.pro_name = pro_name;
+    public String getDetailDesc(){
+        return this.detailDesc;
+    }
+    public String getShortDesc(){
+        return this.shortDesc;
     }
 
     public double getPrice() {
@@ -76,10 +77,22 @@ public class Product extends BaseEntity {
 
     @Override
     public String toString() {
-        return "Product [id=" + getId() + ", pro_name=" + pro_name + ", price=" + price + ", image=" + image
+        return "Product [id=" + getId() + ", pro_name=" + proName + ", price=" + price + ", image=" + image
                 +", quantity=" + quantity + ", sold=" + sold + ", manufactor=" + manufactor + ", target=" + target
                 + ", getFormattedCreatedAt()=" + getFormattedCreatedAt() + ", getFormattedUpdatedAt()="
                 + getFormattedUpdatedAt() + "]";
+    }
+    public String getProName() {
+        return proName;
+    }
+    public void setProName(String proName) {
+        this.proName = proName;
+    }
+    public void setDetailDesc(String detailDesc) {
+        this.detailDesc = detailDesc;
+    }
+    public void setShortDesc(String shortDesc) {
+        this.shortDesc = shortDesc;
     }
 
 }

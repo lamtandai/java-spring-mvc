@@ -1,0 +1,42 @@
+#avatarModal .modal-dialog {
+  max-width: none;
+  width: auto;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+#avatarModal .modal-content {
+  background-color: transparent;
+  border: none;
+  width: auto;
+  height: auto;
+}
+
+#avatarModal .modal-header {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: none;
+  border-radius: auto;
+  padding: 0.5rem;
+}
+
+#avatarModal .modal-body {
+  padding: 0;
+  max-height: 80vh;
+  /* Limits height to 80% of viewport height */
+  overflow-y: auto;
+  /* Adds scrollbar if content exceeds max height */
+}
+
+#modalImage {
+  display: block;
+  max-width: 90vw;
+  border-radius: none;
+  object-fit: cover;
+}

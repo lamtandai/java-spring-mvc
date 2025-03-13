@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "roles")
 public class Role extends BaseEntity {
-    private String role_name;
+    private String roleName;
     private String description;
     
     public String getDescription() {
@@ -25,25 +25,25 @@ public class Role extends BaseEntity {
 
 
     public String getRole_string() {
-        return role_name;
+        return roleName;
     }
 
     public void setrole_name(String role_name) {
-        this.role_name = role_name;
+        this.roleName = role_name;
     }
 
     @Override
     public String toString() {
-        return "Role [role_id=" + getId() + ", role_name=" + role_name + ", getFormattedCreatedAt()="
+        return "Role [role_id=" + getId() + ", role_name=" + roleName + ", getFormattedCreatedAt()="
                 + getFormattedCreatedAt() + ", getFormattedUpdatedAt()=" + getFormattedUpdatedAt() + "]";
     }
 
     public String getRole_name() {
-        return role_name;
+        return roleName;
     }
 
     public void setRole_name(String role_name) {
-        this.role_name = role_name;
+        this.roleName = role_name;
     }
 
     public List<User> getUser() {

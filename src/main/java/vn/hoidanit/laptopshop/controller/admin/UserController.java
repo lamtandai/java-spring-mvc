@@ -1,12 +1,8 @@
 package vn.hoidanit.laptopshop.controller.admin;
-
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.servlet.ServletContext;
 import vn.hoidanit.laptopshop.domain.User;
 import vn.hoidanit.laptopshop.service.UploadService;
 import vn.hoidanit.laptopshop.service.UserService;
@@ -27,21 +22,16 @@ public class UserController {
 
     final private UserService userService;
     final private UploadService uploadService;
-
-    public UserController(UserService userService, UploadService uploadService) {
+    final private PasswordEncoder passwordEncoder;
+    
+    public UserController(UserService userService, UploadService uploadService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.uploadService = uploadService;
+        this.passwordEncoder = passwordEncoder;
+
     }
 
-// homepage
-    @RequestMapping("/")
-    public String getHomePage(Model model) {
-        String test = this.userService.handleHelloWord();
-        model.addAttribute("model1", test);
-        return "hello";
-    }
-
-// Get admin's dashboard
+// Get admin's all users
     @RequestMapping("/admin/user")
     @SuppressWarnings("empty-statement")
     public String listUser(Model model) {
@@ -52,19 +42,24 @@ public class UserController {
 
 // Create user 
     @RequestMapping(value = "/admin/user/create")
-    public String createUser(Model model) {
+    public String createNewUser(Model model) {
         model.addAttribute("newUser", new User());
         return "admin/user/create";
     }
 
 // Save user that have just created
     @PostMapping(value = "/admin/user/create")
-    public String saveUser(
+    public String saveNewUser(
         @ModelAttribute("newUser") User newUser, 
-        @RequestParam("avatarFile") MultipartFile file) throws IOException {
+        @RequestParam("avatarFile") MultipartFile file) throws IOException{
+
+        // set appropriate fields for new users 
+        newUser.setAvatar(this.uploadService.handleSaveUploadFile(file, "avatar"));
+        newUser.setPassword(this.passwordEncoder.encode(newUser.getPassword()));
+        newUser.setRole(this.userService.handleGetRoleByName(newUser.getRole().getRole_name()));
+        // 
         
-        String userAvatar = this.uploadService.handleSaveUploadFile(file, "avatar");
-        // this.userService.handleSaveUser(newUser);
+        this.userService.handleSaveUser(newUser);
         return "redirect:/admin/user/create";
     }
 
@@ -85,11 +80,18 @@ public class UserController {
 
 //Save user have just modified
     @PostMapping(value = "/admin/user/update/{id}")
-    public String updateUser(@ModelAttribute("user") User updatedUser) {
+    public String updateUser(
+        @ModelAttribute("user") User updatedUser,
+        @RequestParam("avatarFile") MultipartFile file)throws IOException {
         User currentUser = this.userService.handleGetUserById(updatedUser.getId());
         currentUser.setAddress(updatedUser.getAddress());
         currentUser.setFullName(updatedUser.getFullName());
+
         currentUser.setPhone(updatedUser.getPhone());
+        
+        if (file != null && !file.isEmpty()) {
+            currentUser.setAvatar(this.uploadService.handleSaveUploadFile(file, "avatar"));
+        }
         this.userService.handleSaveUser(currentUser);
         return "redirect:/admin/user/view/{id}";
     }

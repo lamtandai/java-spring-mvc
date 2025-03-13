@@ -84,13 +84,9 @@
 
                                     <div class="mb-3 col-12 col-md-6">
                                         <label class="form-label">Role</label>
-                                        <!--role is an object, not a text, we are selecting text,
-                                        role.role_name will receive the name in the form, 
-                                        but other fields (id, desc) will be null 
-                                        -->
                                         <form:select path="role.role_name" class="form-control">
-                                            <form:option value="ADMIN">Admin</form:option>
-                                            <form:option value="USER">User</form:option>
+                                            <form:option value="user">USER</form:option>
+                                            <form:option value="admin">ADMIN</form:option>
                                         </form:select>
 
                                     </div>
@@ -106,7 +102,7 @@
                                     </div>
                                     <div>
                                         <div class="col-12 mb-3">
-                                            <img style="max-height: 250px; display: none;" alt="avatar preview" id="avatarPreview"/> 
+                                            <img style="max-height: 250px;max-width: 1000px; display: none;" alt="avatar preview" id="avatarPreview"/> 
                                         </div>
                                     </div>
 
@@ -123,13 +119,8 @@
                                         </button>
                                     </div>
                                 </form:form>
-
-
-
                             </div>
-
                         </main>
-
                         <jsp:include page="../layout/footer.jsp" />
                     </div>
                 </div>

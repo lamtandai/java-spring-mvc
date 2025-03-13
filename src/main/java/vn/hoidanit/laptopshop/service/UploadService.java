@@ -19,25 +19,32 @@ public class UploadService {
         this.servletContext = servletContext;
     }
 
-    public String handleSaveUploadFile(MultipartFile file, String targetFolder) throws IOException{
+    public String handleSaveUploadFile(MultipartFile file, String targetFolder) throws IOException {
         byte[] bytes = file.getBytes();
-            // return dir webapp
-            String rootPath = this.servletContext.getRealPath("/content/images");
+        // return dir webapp
 
-            File dir = new File(rootPath + File.separator + targetFolder);
-            // separator: "/" -> /content/images/avatar
-            if (!dir.exists())
-                dir.mkdirs();
+        String rootPath = this.servletContext.getRealPath("/content/images");
 
-            // Create the file on server
-            String prefix_name = System.currentTimeMillis() + "-"+ UUID.randomUUID() + "-" + file.getOriginalFilename();
-            File serverFile = new File(dir.getAbsolutePath() + File.separator + prefix_name);
-            // avoid the similar files
-        try (BufferedOutputStream stream = new BufferedOutputStream(
-                new FileOutputStream(serverFile))) {
-            stream.write(bytes);
+        File dir = new File(rootPath + File.separator + targetFolder);
+        // separator: "/" -> /content/images/avatar
+        if (!dir.exists())
+            dir.mkdirs();
+
+        String postfix_path = "";
+
+        if (bytes.length == 0) {
+            postfix_path = "defaultImg.jpeg";
+        } else {
+            postfix_path = System.currentTimeMillis() + "-" + UUID.randomUUID() + "-" + file.getOriginalFilename();
+            File serverFile = new File(dir.getAbsolutePath() + File.separator + postfix_path);
+            try (BufferedOutputStream stream = new BufferedOutputStream(
+                    new FileOutputStream(serverFile))) {
+                stream.write(bytes);
+                stream.close();
+            }
         }
-        return prefix_name;
+        // avoid the similar files
+        return postfix_path;
     }
 
 }

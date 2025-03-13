@@ -13,13 +13,23 @@
             <meta name="author" content="" />
             <title>Create User</title>
             <link href="/css/styles.css" rel="stylesheet" />
+            <link href="/css/avatar_style_modal.css" rel="stylesheet" />
             <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-            <script>
-                function setFormAction(actionUrl) {
-                    document.getElementById("userForm").action = actionUrl;
-                    document.getElementById("userForm").submit();
-                }
-            </script>
+            
+             <div class="modal fade" id="avatarModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Avatar Preview</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body text-center">
+                            <img id="modalImage" src="../../../../images/avatar/${user.avatar}" alt="Full Avatar">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
         </head>
 
         <body class="sb-nav-fixed">
@@ -29,22 +39,30 @@
                 <div id="layoutSidenav_content">
                     <main>
                         <div class="container-fluid px-4">
-                            <h1 class="mt-4">User View </h1>
-                            <ol class="breadcrumb mb-4">
-                                <li class="breadcrumb-item active">
-                                    <a href="/admin"> Dashboard</a>
-                                </li>
-                                <li class="breadcrumb-item active">
-                                    <a href="/admin/user"> User </a>
-                                </li>
-                                <li class="breadcrumb-item active">User View</li>
-                            </ol>
-                            <div class="mt-4">
+                            <div>
+                                <div class="d-flex justify-content-between"> 
+                                    <div><h1 class="mt-3">User View </h1>
+                                        <ol class="breadcrumb mb-4">
+                                            <li class="breadcrumb-item active">
+                                                <a href="/admin"> Dashboard</a>
+                                            </li>
+                                            <li class="breadcrumb-item active">
+                                                <a href="/admin/user"> User </a>
+                                            </li>
+                                            <li class="breadcrumb-item active">User View</li>
+                                        </ol>
+                                    </div>
+                                    <div class="image-container">
+                                        <img src="../../../../images/avatar/${user.avatar}" style="border-radius: 50%; object-fit: cover;" width="100" height="100" data-bs-toggle="modal" data-bs-target="#avatarModal"/> 
+                                    </div>
+                                </div>
+
+                            </div>
+                            
+                            <div >
                                 <div class="row">
                                     <div class="col-12 mx-auto">
-                                        
                                         <div class="card">
-                                            
                                             <ul class="list-group list-group-flush fs-3">
                                                 <li class="list-group-item d-flex justify-content-between">
                                                     <span>ID</span>
@@ -53,6 +71,10 @@
                                                 <li class="list-group-item d-flex justify-content-between">
                                                     <span>Full Name</span>
                                                     <span>${user.fullName}</span>
+                                                </li>
+                                                <li class="list-group-item d-flex justify-content-between">
+                                                    <span>Role </span>
+                                                    <span>${user.getRole().role_name}</span>
                                                 </li>
                                                 <li class="list-group-item d-flex justify-content-between">
                                                     <span>Email</span>
@@ -80,18 +102,29 @@
                                     </div>
                             
                                 </div>
-                                <a href="/admin/user" class="btn btn-success"> Back </a>
-                            
+                                <div class="d-flex justify-content-end mt-2">
+                                <a href="/admin/user" class="btn btn-success me-2"> Back </a>
+                                <a href="/admin/user/update/${user.id}" class="btn btn-warning me-2 ">Update</a>
+                                <a href="#" class="btn btn-danger" data-bs-toggle="modal"
+                                                                data-bs-target="#deleteModal${user.id}">
+                                                                Delete
+                                                            </a>
+                                                            <jsp:include page='delete.jsp'>
+                                                                <jsp:param name="userId" value="${user.id}" />
+                                                            </jsp:include>
+                                </div>
+                                
                             </div>
                         </div>
                     </main>
                     <jsp:include page="../layout/footer.jsp" />
                 </div>
             </div>
+           
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
                 crossorigin="anonymous"></script>
             <script src="/js/scripts.js"></script>
-
+            
         </body>
 
         </html>

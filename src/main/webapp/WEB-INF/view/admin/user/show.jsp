@@ -30,6 +30,7 @@
                                 </li>
                                 <li class="breadcrumb-item active">Users</li>
                             </ol>
+                            <!-- main content -->
                             <div class="mt-3">
                                 <div class="row">
                                     <div class="col-12 mx-auto">
@@ -47,7 +48,7 @@
                                                     <th scope="col">Id</th>
                                                     <th scope="col">Email</th>
                                                     <th scope="col">FullName</th>
-                                                    <th scope="col">Created At</ths>
+                                                    <th scope="col">Role</th>
                                                     <th scope="col">Updated At</ths>
                                                     <th scope="col">Action</th>
                                                 </tr>
@@ -58,7 +59,7 @@
                                                         <td>${user.id}</td>
                                                         <td>${user.email}</td>
                                                         <td>${user.fullName}</td>
-                                                        <td>${user.getFormattedCreatedAt()}</td>
+                                                        <td>${user.getRole().getRole_name()}</td>
                                                         <td>${user.getFormattedUpdatedAt()}</td>
                                                         <td class="d-flex flex-row">
                             
