@@ -23,14 +23,8 @@ window.addEventListener('DOMContentLoaded', event => {
 
 });
 
-$(document).ready(() => {
-    const avatarFile = $("#avatarFile");
-    avatarFile.change(function (e) {
-        const imgURL = URL.createObjectURL(e.target.files[0]);
-        $("#avatarPreview").attr("src", imgURL);
-        $("#avatarPreview").css({ "display": "block" });
-    });
-});
+
+
 
 
 
