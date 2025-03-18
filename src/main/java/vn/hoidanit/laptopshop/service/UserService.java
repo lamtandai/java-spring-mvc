@@ -52,4 +52,7 @@ public class UserService {
         user.setPhone(rDTO.getPhone());
         return user;
     }
+    public boolean handleCheckExistByEmail(String Email){
+        return this.userRepo.existsByEmail(Email);
+    }
 }

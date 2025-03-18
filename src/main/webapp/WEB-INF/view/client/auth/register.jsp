@@ -58,11 +58,14 @@
                                 </div>
                                 <div class="mb-3 col-12 ">
                                     <label class="form-label">Email address</label>
+                                    <c:set var="errorEmail">
+                                        <form:errors path="email" />
+                                    </c:set>
                                     <form:input type="email" class="form-control" path="email" id="email"
                                         placeholder="Enter your email?" data-required="true" />
                                     <div class="invalid-feedback">
                                         <c:if test="${not empty errorEmail}">
-                                            <c:out value="${errorEmail}" />
+                                           ${errorEmail}
                                         </c:if>
                                     </div>
                                     <div class="valid-feedback">Looks good!</div>
@@ -90,7 +93,7 @@
                                         placeholder="Enter your password?" data-required="true" />
                                     <div class="invalid-feedback">
                                         <c:if test="${not empty errorPassword}">
-                                            <c:out value="${errorPassword}" />
+                                            ${errorPassword}
                                         </c:if>
                                     </div>
                                     <div class="valid-feedback">Looks good!</div>
@@ -105,7 +108,7 @@
                                         placeholder="Confirm your password" id="confirmPassword" data-required="true" />
                                     <div class="invalid-feedback">
                                         <c:if test="${not empty errorConfirmPassword}">
-                                            <c:out value="${errorConfirmPassword}" />
+                                            ${errorConfirmPassword}
                                         </c:if>
                                     </div>
                                     <div class="valid-feedback">Looks good!</div>
