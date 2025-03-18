@@ -20,19 +20,14 @@
                         document.getElementById("userForm").submit();
                     }
                 </script>
-                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-                 <script>
-                     $(document).ready(() => {
-                         const avatarFile = $("#avatarFile");
-                         avatarFile.change(function (e) {
-                             const imgURL = URL.createObjectURL(e.target.files[0]);
-                             $("#avatarPreview").attr("src", imgURL);
-                             $("#avatarPreview").css({ "display": "block" });
-                         });
-                     });
-                 </script>
- 
+                <script>
+                    $(document).ready(() => {
+                        previewImage($("#avatarFile"),$("#avatarPreview"),"${user.avatar}","avatar")
+                    });
+                </script>
+
             </head>
 
             <body class="sb-nav-fixed">
@@ -54,12 +49,10 @@
                                 </ol>
 
                                 <form:form method="post" action="/admin/user/update/${user.id}" modelAttribute="user"
-                                    id="userForm" class="row g-3 col-12 col-md-8 mx-auto"
-                                    enctype="multipart/form-data"
-                                    >
+                                    id="userForm" class="row g-3 col-12 col-md-8 mx-auto" enctype="multipart/form-data">
                                     <div class="mb-3 col-12 col-md-6">
                                         <label class="form-label">User's Id</label>
-                                        <form:input path="id" type="email" class="form-control" readonly="true"/>
+                                        <form:input path="id" type="email" class="form-control" readonly="true" />
                                     </div>
 
                                     <div class="mb-3 col-12 col-md-6">
@@ -69,21 +62,40 @@
 
                                     <div class="mb-3 col-12 col-md-6">
                                         <label class="form-label">Full Name</label>
-                                        <form:input path="fullName" type="text" class="form-control" />
-                                    </div>
+                                        <c:set var="errorName">
+                                            <form:errors path="fullName" />
+                                        </c:set>
+                                        <form:input path="fullName" type="text" class="form-control" id="fullName" data-required="true" />
+                                        <div class="invalid-feedback">
+                                            <c:if test="${not empty errorName}">
+                                                <c:out value="${errorName}"/>
+                                            </c:if>
+                                        </div>
+                                        <div class="valid-feedback">Looks good!</div>
+                                    </div>         
 
                                     <div class="mb-3 col-12 col-md-6">
                                         <label class="form-label">Phone</label>
-                                        <form:input path="phone" type="text" class="form-control" />
+                                        <c:set var="errorPhone">
+                                            <form:errors path="phone" />
+                                        </c:set>
+                                        <form:input path="phone" type="text" class="form-control" id="phone" data-required="true" />
+                                        <div class="invalid-feedback">
+                                            <c:if test="${not empty errorPhone}">
+                                                <c:out value="${errorPhone}"/>
+                                            </c:if>
+                                        </div>
+                                        <div class="valid-feedback">Looks good!</div>
                                     </div>
 
                                     <div class="mb-3 col-12 col-md-6">
                                         <label class="form-label">Password</label>
                                         <form:input path="password" type="password" class="form-control" />
                                     </div>
+
                                     <div class="mb-3 col-md-6 col-12 ">
                                         <label class="form-label">Role</label>
-                                        <form:input path="role.role_name" class="form-control" readonly="true"/>
+                                        <form:input path="role.role_name" class="form-control" readonly="true" />
                                     </div>
 
                                     <div class="mb-3 col-12">
@@ -91,47 +103,34 @@
                                         <form:input path="address" type="text" class="form-control" />
                                     </div>
 
-                                    
-                                    <div class="mb-3 col-md-6 col-12">
-                                        <label class="mb-3">Current Avatar</label>
-
-                                        <div class="image-container">
-                                            <img class="mb-3" src="../../../../images/avatar/${user.avatar}" style="border-radius: 50%; object-fit: cover;" width="100" height="100" data-bs-toggle="modal" data-bs-target="#avatarModal"/> 
-                                        </div>
-                                    </div>
-
                                     <div class="mb-3 col-md-6 col-12">
                                         <label for="avatarFile" class="form-label">Avatar</label>
-                                        <input 
-                                        id="avatarFile" 
-                                        type="file" 
-                                        class="form-control" 
-                                        accept=".png, .jpg, .jpeg"
-                                        name="avatarFile"
-                                        />
+                                        <input id="avatarFile" type="file" class="form-control"
+                                            accept=".png, .jpg, .jpeg" name="avatarFile" />
                                     </div>
-                                    
+
                                     <div>
                                         <div class="col-12 mb-3">
-                                            <img style="max-height: 250px; max-width: 1000px; display: none;" alt="avatar preview" id="avatarPreview"/> 
+                                            <img style="max-height: 250px; max-width: 1000px; display: none;"
+                                                alt="avatar preview" id="avatarPreview" />
                                         </div>
                                     </div>
 
                                     <!-- Buttons -->
                                     <div class="d-flex flex-column">
-                                                                
+
                                         <button type="button" class="btn btn-primary mb-2"
                                             onclick="setFormAction('/admin/user/update/${user.id}')">
                                             Verify
                                         </button>
 
                                         <a href="#" class="btn btn-danger mb-2" data-bs-toggle="modal"
-                                                                data-bs-target="#deleteModal${user.id}">
-                                                                Delete
-                                                            </a>
-                                                            <jsp:include page='delete.jsp'>
-                                                                <jsp:param name="userId" value="${user.id}" />
-                                                            </jsp:include>
+                                            data-bs-target="#deleteModal${user.id}">
+                                            Delete
+                                        </a>
+                                        <jsp:include page='delete.jsp'>
+                                            <jsp:param name="userId" value="${user.id}" />
+                                        </jsp:include>
 
                                         <button type="button" class="btn btn-secondary"
                                             onclick="setFormAction('/admin/user')">
@@ -147,6 +146,9 @@
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
                     crossorigin="anonymous"></script>
                 <script src="/js/scripts.js"></script>
+                <script src="/js/preview.js"> </script>
+                <script src="/js/nameValidation.js"> </script>
+                <script src="/js/phoneValidation.js"> </script>
 
             </body>
 

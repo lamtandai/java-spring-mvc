@@ -24,7 +24,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
                         <div class="modal-body text-center mt-5">
-                            <img id="modalImage" src="../../../../images/product/${product.image}" alt="Full Avatar">
+                            <img id="modalImage" src="/images/product/${product.image}" alt="Full Avatar">
                         </div>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
                                         </ol>
                                     </div>
                                     <div class="image-container">
-                                        <img src="../../../../images/product/${product.image}" style="border-radius: 50%; object-fit: cover;" width="100" height="100" data-bs-toggle="modal" data-bs-target="#avatarModal"/> 
+                                        <img src="/images/product/${product.image}" style="border-radius: 50%; object-fit: cover;" width="100" height="100" data-bs-toggle="modal" data-bs-target="#avatarModal"/> 
                                     </div>
                                 </div>
 

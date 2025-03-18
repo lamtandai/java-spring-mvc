@@ -1,22 +1,40 @@
 package vn.hoidanit.laptopshop.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "products")
 public class Product extends BaseEntity {
 
+    @NotEmpty()
+    @Pattern(regexp="^[a-zA-Z ]{1,}$", message = "ProductName must be at least 10 characters long, no special character, and number is allowed")
+    @Size(min = 1, message = "ProductName must be at least 10 characters long, no special character, and number is allowed")
     private String proName;
-    private double price;
-    private String image;
     
+
+    @Min(value = 0, message="PriceValue must be non-negative")
+    private double price;
+
+    private String image;
+
+    @Min(value = 0, message="QuantityValue must be non-negative")
     private long quantity;
+
     private long sold;
+
     private String manufactor;
+
     private String target;
 
+    @Column(columnDefinition="MEDIUMTEXT")
     private String detailDesc;
+
     private String shortDesc;
 
     public String getDetailDesc(){

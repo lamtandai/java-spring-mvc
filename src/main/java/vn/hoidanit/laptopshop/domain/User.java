@@ -22,16 +22,18 @@ public class User extends BaseEntity{
     @Size(min = 10, message = "Name Field must be at least 10 characters long, no special character, and number is allowed")
     private String fullName; 
 
+    @NotEmpty()
     @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")
-    
     private String email;
     
+    @NotEmpty()
     @Pattern(regexp="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=]).{8,}$",
              message="Password must contain at least 8 characters, including one lowercase letter, one uppercase letter, one number, and one special character")
     private String password; 
 
     private String address; 
 
+    @NotEmpty()
     @Pattern(regexp="^0\\d{9}$", message = "Phone number must be 10 digits starting with 0")
     private String phone;
 

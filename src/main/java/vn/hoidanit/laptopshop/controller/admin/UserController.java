@@ -7,7 +7,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -81,7 +80,9 @@ public class UserController {
 
     // Get user whose information is gonna be modified
     @GetMapping(value = "/admin/user/update/{id}")
-    public String getUpdateUserPage(Model model, @PathVariable long id) {
+    public String getUpdateUserPage(
+            Model model,
+            @PathVariable long id) {
         User user = this.userService.handleGetUserById(id);
         model.addAttribute("user", user);
         return "admin/user/update";
@@ -94,22 +95,19 @@ public class UserController {
             BindingResult bindingResult,
             @RequestParam("avatarFile") MultipartFile file) throws IOException {
 
-        List<FieldError> errors = bindingResult.getFieldErrors();
-        for (FieldError error : errors) {
-            System.out.println(">>>>" + error.getField() + "-" + error.getDefaultMessage());
-        }
-
         if (bindingResult.hasErrors()) {
             return "/admin/user/update/{id}";
         }
+
         User currentUser = this.userService.handleGetUserById(updatedUser.getId());
-        currentUser.setAddress(updatedUser.getAddress());
-        currentUser.setFullName(updatedUser.getFullName());
+        if (currentUser != null) {
+            currentUser.setAddress(updatedUser.getAddress());
+            currentUser.setFullName(updatedUser.getFullName());
+            currentUser.setPhone(updatedUser.getPhone());
 
-        currentUser.setPhone(updatedUser.getPhone());
-
-        if (file != null && !file.isEmpty()) {
-            currentUser.setAvatar(this.uploadService.handleSaveUploadFile(file, "avatar"));
+            if (file != null && !file.isEmpty()) {
+                currentUser.setAvatar(this.uploadService.handleSaveUploadFile(file, "avatar"));
+            }
         }
         this.userService.handleSaveUser(currentUser);
         return "redirect:/admin/user/view/{id}";

@@ -23,14 +23,11 @@
                  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
                  <script>
-                     $(document).ready(() => {
-                         const avatarFile = $("#avatarFile");
-                         avatarFile.change(function (e) {
-                             const imgURL = URL.createObjectURL(e.target.files[0]);
-                             $("#avatarPreview").attr("src", imgURL);
-                             $("#avatarPreview").css({ "display": "block" });
-                         });
-                     });
+                    $(document).ready(() => {
+                        $(document).ready(() => {
+                            previewImage( $("#avatarFile"), $("#avatarPreview"));
+                        });
+                    });
                  </script>
  
             </head>
@@ -167,7 +164,7 @@
                     <script src="/js/phoneValidation.js"></script>
                     <script src="/js/nameValidation.js"></script>
                     <script src="/js/checkFormField.js"></script>
-
+                    <script src="/js/preview.js"></script>
             </body>     
 
             </html>

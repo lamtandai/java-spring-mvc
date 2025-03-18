@@ -22,16 +22,7 @@
                 </script>
                  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-                 <script>
-                     $(document).ready(() => {
-                         const laptopFile = $("#laptopFile");
-                         laptopFile.change(function (e) {
-                             const imgURL = URL.createObjectURL(e.target.files[0]);
-                             $("#avatarPreview").attr("src", imgURL);
-                             $("#avatarPreview").css({ "display": "block" });
-                         });
-                     });
-                 </script>
+                 
  
             </head>
 
@@ -81,9 +72,18 @@
                                         <form:input path="sold" type="number" class="form-control" />
                                     </div>
 
-                                    <div class="mb-3 col-md-6 col-12">
-                                        <label class="form-label">Manufacturer</label>
-                                        <form:input path="manufactor" type="text" class="form-control" />
+                                    <div class="mb-3 col-12 col-md-6">
+                                        <label class="form-label">Manufactor</label>
+                                        <form:select path="manufactor" class="form-control">
+                                            <form:option value="">Select</form:option>
+                                            <form:option value="Apple">Apple</form:option>
+                                            <form:option value="Asus">Asus</form:option>
+                                            <form:option value="Acer">Acer</form:option>
+                                            <form:option value="Dell">Dell</form:option>
+                                            <form:option value="Lg">Lg</form:option>
+                                            <form:option value="lenovo">lenovo</form:option>
+                                        </form:select>
+
                                     </div>
 
                                     <div class="mb-3 col-md-6 col-12">
@@ -96,32 +96,33 @@
                                         <form:input path="detailDesc" type="text" class="form-control" />
                                     </div>
 
-                                    
-                                    <div class="mb-3 col-md-6 col-12">
-                                        <label class="mb-3">Current Image</label>
+                                    <div class="mb-3 col-12 col-md-6">
+                                        <label class="form-label">Target</label>
+                                        <!--role is an object, not a text, we are selecting text,
+                                        role.role_name will receive the name in the form, 
+                                        but other fields (id, desc) will be null 
+                                        -->
+                                        <form:select path="target" class="form-control">
+                                            <form:option value="Gaming">Gaming</form:option>
+                                            <form:option value="Graphic Design">Graphic Design</form:option>
+                                            <form:option value="On-the-go">On-the-go</form:option>
+                                            <form:option value="For Office worker">For Office worker</form:option>
+                                            <form:option value="Entrepreneur">Entrepreneur</form:option>
+                                        </form:select>
 
-                                        <div class="image-container">
-                                            <img class="mb-3" src="../../../../images/product/${product.image}" style="border-radius: 50%; object-fit: cover;" width="100" height="100" data-bs-toggle="modal" data-bs-target="#avatarModal"/> 
-                                        </div>
                                     </div>
 
                                     <div class="mb-3 col-md-6 col-12">
-                                        <label for="laptopFile" class="form-label">New Image</label>
-                                        <input 
-                                        id="laptopFile" 
-                                        type="file" 
-                                        class="form-control" 
-                                        accept=".png, .jpg, .jpeg"
-                                        name="laptopFile"
-                                        />
+                                        <label for="laptopImage" class="form-label">Image</label>
+                                        <input id="laptopImage" type="file" class="form-control"
+                                            accept=".png, .jpg, .jpeg" name="laptopImage" />
                                     </div>
-                                    
                                     <div>
                                         <div class="col-12 mb-3">
-                                            <img style="max-height: 250px; max-width: 1000px; display: none;" alt="avatar preview" id="avatarPreview"/> 
+                                            <img style="max-height: 250px; display: none;" alt="laptop preview"
+                                                id="laptopPreview" />
                                         </div>
                                     </div>
-
                                     <!-- Buttons -->
                                     <div class="d-flex flex-column">
                                                                 
@@ -151,8 +152,15 @@
                 </div>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
                     crossorigin="anonymous"></script>
-                <script src="/js/scripts.js"></script>
-
+                    <script src="/js/scripts.js"></script>
+                    <script src="/js/imagePreview.js"></script>
+                    <script src="/js/preview.js"></script>
+                    <script>
+                        $(document).ready(() => {
+                            const imagePath = "${product.image}";
+                            previewImage($("#laptopImage"), $("#laptopPreview"),imagePath, "product");
+                        });
+                     </script>
             </body>
 
             </html>

@@ -23,10 +23,11 @@
                     }
                 </script>
                 
-
                 <script>
                     $(document).ready(() => {
-                        handleFilePreview('laptopImage', 'laptopPreview');
+                        $(document).ready(() => {
+                            previewImage( $("#laptopImage"), $("#laptopPreview"));
+                        });
                     });
                 </script>
 
@@ -49,13 +50,23 @@
                                     </li>
                                     <li class="breadcrumb-item active"> Create Product</li>
                                 </ol>
-
+                                
                                 <form:form method="post" action="/admin/product/create" modelAttribute="newProduct"
                                     id="productForm" class="row g-3 col-12 col-md-8 mx-auto"
                                     enctype="multipart/form-data">
+
                                     <div class="mb-3 col-12 col-md-6">
                                         <label class="form-label">Name</label>
-                                        <form:input path="proName" type="text" class="form-control" />
+                                        <c:set var="errorName">
+                                            <form:errors path="proName" />
+                                        </c:set>
+                                        <form:input type="proName" class="form-control" path="proName" id="proName" data-required="true" />
+                                        <div class="invalid-feedback">
+                                            <c:if test="${not empty errorName}">
+                                                <c:out value="${errorName}"/>
+                                            </c:if>
+                                        </div>
+                                        <div class="valid-feedback">Looks good!</div>
                                     </div>
 
                                     <div class="mb-3 col-12 col-md-6">
@@ -84,12 +95,30 @@
 
                                     <div class="mb-3 col-12 col-md-6">
                                         <label class="form-label">Price</label>
-                                        <form:input path="price" type="text" class="form-control" />
+                                        <c:set var="errorPrice">
+                                            <form:errors path="price" />
+                                        </c:set>
+                                        <form:input type="text" class="form-control" path="price" id="price" data-required="true" />
+                                        <div class="invalid-feedback">
+                                            <c:if test="${not empty errorPrice}">
+                                                <c:out value="${errorPrice}"/>
+                                            </c:if>
+                                        </div>
+                                        <div class="valid-feedback">Looks good!</div>
                                     </div>
 
                                     <div class="mb-3 col-12 col-md-6">
                                         <label class="form-label">Quantity</label>
-                                        <form:input path="quantity" type="text" class="form-control" />
+                                        <c:set var="errorQuantity">
+                                            <form:errors path="quantity" />
+                                        </c:set>
+                                        <form:input type="number" class="form-control" path="quantity" id="quantity" data-required="true"/>
+                                        <div class="invalid-feedback">
+                                            <c:if test="${not empty errorQuantity}">
+                                                <c:out value="${errorQuantity}"/>
+                                            </c:if>
+                                        </div>
+                                        <div class="valid-feedback">Looks good!</div>
                                     </div>
 
                                     <div class="mb-3 col-12 col-md-6">
@@ -107,6 +136,7 @@
                                         </form:select>
 
                                     </div>
+                                    
                                     <div class="mb-3 col-md-6 col-12">
                                         <label for="laptopImage" class="form-label">Image</label>
                                         <input id="laptopImage" type="file" class="form-control"
@@ -122,7 +152,8 @@
                                     <!-- Buttons -->
                                     <div class="d-flex flex-column">
                                         <button type="button" class="btn btn-primary mb-2"
-                                            onclick="setFormAction('/admin/product/create')">
+                                            onclick="setFormAction('/admin/product/create')"
+                                            id="submitButton" disabled>
                                             Submit
                                         </button>
 
@@ -139,7 +170,11 @@
                 </div>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
                     crossorigin="anonymous"></script>
-                <script src="/js/imagePreview.js"></script>
+                    <script src="/js/preview.js"></script>
+                    <script src="/js/priceValidation.js"></script>
+                    <script src="/js/quantityValidation.js"></script>
+                    <script src="/js/productNameValidation.js"></script>
+                    <script src="/js/checkFormField.js"></script>
             </body>
 
             </html>
