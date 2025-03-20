@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import jakarta.validation.Valid;
 import vn.hoidanit.laptopshop.domain.Product;
 import vn.hoidanit.laptopshop.domain.User;
+import vn.hoidanit.laptopshop.domain.dto.loginDTO;
 import vn.hoidanit.laptopshop.domain.dto.registerDTO;
 import vn.hoidanit.laptopshop.service.ProductService;
 import vn.hoidanit.laptopshop.service.UserService;
@@ -60,7 +61,22 @@ public class HomePageController {
 
     @GetMapping(value="/login")
     public String getLoginPage(Model model){
-        
+        model.addAttribute("loginUser", new loginDTO());
         return "client/auth/login";
+    }
+
+    @PostMapping(value="/login")
+    public String verifyUserLogin(
+        @ModelAttribute("loginUser")@Valid loginDTO loginUser,
+        BindingResult bindingResult
+    ){
+        if (bindingResult.hasErrors()){
+            return "client/auth/login";
+        }
+        
+
+
+        
+        return "redirect:/";
     }
 }

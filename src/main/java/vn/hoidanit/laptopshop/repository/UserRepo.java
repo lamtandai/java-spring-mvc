@@ -12,7 +12,7 @@ public interface UserRepo extends JpaRepository<User, Long> {
     @SuppressWarnings({ "null", "unchecked" })
     @Override
     User save(User newUser);
-    List<User> findByEmail(String email);
+    User findByEmail(String email);
     List<User> findAllByOrderByCreatedAtDesc();
     void deleteById(long Id);
     User findById(long id);

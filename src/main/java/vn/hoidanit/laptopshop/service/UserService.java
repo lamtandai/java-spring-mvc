@@ -28,7 +28,7 @@ public class UserService {
     public List<User> handleListALlUser(){
         return this.userRepo.findAll();
     }
-    public List <User> handleGetUserByEmail(String email){
+    public User handleGetUserByEmail(String email){
         return this.userRepo.findByEmail(email);
     }
     public void handleDeleteById(long Id){
