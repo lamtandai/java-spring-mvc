@@ -73,10 +73,12 @@ public class HomePageController {
         if (bindingResult.hasErrors()){
             return "client/auth/login";
         }
-        
-
-
-        
         return "redirect:/";
+    }
+
+    @GetMapping(value="/accessDenied")
+    public String getDeniedpage(){
+        
+        return "client/auth/deny";
     }
 }

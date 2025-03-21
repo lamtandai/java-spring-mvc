@@ -71,9 +71,14 @@
                                     <div>
                                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                                     </div>
+                                   
                                     <c:if test="${param.error != null}">
-                                    <div class="my-2" style="color: red;">Invalid email or password.</div>
-                                </c:if>
+                                        <div class="my-2" style="color: red;">Invalid email or password.</div>
+                                    </c:if>
+
+                                    <c:if test="${param.logout != null}">
+                                        <div class="mt-2" style="color: green;">Log out successfully.</div>
+                                    </c:if>
 
                                 </div>
 

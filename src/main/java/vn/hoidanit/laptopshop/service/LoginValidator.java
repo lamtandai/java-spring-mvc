@@ -1,11 +1,9 @@
 package vn.hoidanit.laptopshop.service;
 
-import java.util.List;
-
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import vn.hoidanit.laptopshop.domain.dto.loginDTO;
-import vn.hoidanit.laptopshop.domain.User;
+
 
 public class LoginValidator implements ConstraintValidator<LoginChecked, loginDTO> {
     final private UserService userService;
