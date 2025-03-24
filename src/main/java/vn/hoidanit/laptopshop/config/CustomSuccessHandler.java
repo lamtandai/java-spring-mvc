@@ -16,11 +16,18 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import vn.hoidanit.laptopshop.domain.User;
+import vn.hoidanit.laptopshop.service.UserService;
 
 public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
     
+    final private UserService userService;
+    
+    public CustomSuccessHandler(UserService userService){
+        this.userService = userService;
+    }
     protected String determineTargetUrl(final Authentication authentication) {
 
         Map<String, String> roleTargetUrlMap = new HashMap<>();
@@ -38,10 +45,16 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
         throw new IllegalStateException();
     }
 
-    protected void clearAuthenticationAttributes(HttpServletRequest request) {
+    protected void clearAuthenticationAttributes(HttpServletRequest request, Authentication authentication) {
         HttpSession session = request.getSession(false);
         if (session == null) {
             return;
+        }
+        String email = authentication.getName();
+        User user = this.userService.handleGetUserByEmail(email);
+        if (user != null){
+            session.setAttribute("fullName", user.getFullName());
+            session.setAttribute("avatar", user.getAvatar());
         }
         session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
     }
@@ -58,7 +71,7 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 
         redirectStrategy.sendRedirect(request, response, targetUrl);
 
-        clearAuthenticationAttributes(request);
+        clearAuthenticationAttributes(request,authentication);
     }
 
     
