@@ -11,6 +11,7 @@ import vn.hoidanit.laptopshop.domain.User;
 public interface UserRepo extends JpaRepository<User, Long> {
     @SuppressWarnings({ "null", "unchecked" })
     @Override
+    
     User save(User newUser);
     User findByEmail(String email);
     List<User> findAllByOrderByCreatedAtDesc();

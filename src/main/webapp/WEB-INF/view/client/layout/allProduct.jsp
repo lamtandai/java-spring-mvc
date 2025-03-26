@@ -60,17 +60,22 @@
                                                                 class="p-4 border border-secondary border-top-0 rounded-bottom">
                                                                 <h4 style="font-size: 20px;">${product.proName}</h4>
                                                                 <p style="font-size: 16px;">${product.shortDesc}t</p>
-                                                                <div class="d-flex flex-lg-wrap">
+                                                                <div class="d-flex flex-lg-wrap justify-content-center">
                                                                     <p style="font-size: 16px; "
                                                                         class="text-dark fs-5 fw-bold mb-3">
                                                                         <fmt:formatNumber type="number"
                                                                             value="${product.price}" /> đ
 
                                                                     </p>
-                                                                    <a href="#"
+                                                                    <form method="get" action="/add-product-to-cart/${product.id}">
+                                                                        <div>
+                                                                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                                                        </div> 
+                                                                    <button 
                                                                         class="mx-auto btn border border-secondary rounded-pill px-3 text-primary"><i
                                                                             class="fa fa-shopping-bag me-2 text-primary"></i>
-                                                                        Add to cart</a>
+                                                                        Add to cart </button>
+                                                                    </form>
                                                                 </div>
                                                             </div>
                                                         </div>

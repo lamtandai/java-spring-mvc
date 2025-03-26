@@ -65,14 +65,14 @@ public class ProductController {
     public String getUpdateProductPage(Model model, @PathVariable long id) {
         Product product = this.productService.handleGetProductById(id);
         model.addAttribute("product", product);
-        return "/admin/product/update";
+        return "admin/product/update";
     }
 
     @GetMapping("/admin/product/view/{id}")
     public String viewProductPage(Model model, @PathVariable long id) {
         Product product = this.productService.handleGetProductById(id);
         model.addAttribute("product", product);
-        return "/admin/product/detail";
+        return "admin/product/detail";
     }
 
     @PostMapping("/admin/product/update/{id}")
@@ -82,7 +82,7 @@ public class ProductController {
             @RequestParam("laptopImage") MultipartFile file) throws IOException {
 
         if (bindingResult.hasErrors()) {
-            return "/admin/product/update/{id}";
+            return "admin/product/update/{id}";
         }
 
         Product currentProduct = this.productService.handleGetProductById(product.getId());
@@ -97,7 +97,7 @@ public class ProductController {
             currentProduct.setImage(this.uploadService.handleSaveUploadFile(file, "product"));
         }
         this.productService.handelSaveNewProduct(currentProduct);
-        return "redirect:/admin/product/view/{id}";
+        return "redirect:admin/product/view/{id}";
     }
 
     @GetMapping(value = "/admin/product/delete/{id}")
