@@ -8,10 +8,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="order_detail")
-public class Order_detail extends BaseEntity{
-
-    private long quantity;
-    private double price;
+public class OrderDetail extends BaseEntity{
 
     @ManyToOne
     @JoinColumn(name = "order_id")
@@ -21,6 +18,10 @@ public class Order_detail extends BaseEntity{
     @JoinColumn(name= "pro_id")
     private Product product;
 
+    private long quantity;
+    private double price;
+
+    
     @Override
     public String toString() {
         return "Order_detail [quantity=" + quantity + ", price=" + price + ", order=" + order + ", product=" + product

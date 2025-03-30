@@ -2,31 +2,37 @@ package vn.hoidanit.laptopshop.domain;
 
 import java.util.List;
 
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import vn.hoidanit.laptopshop.domain.dto.ConsigneeDTO;
 
 @Entity
 @Table(name = "orders")
 public class Order extends BaseEntity {
+
+    @Embedded
+    private ConsigneeDTO consignee;
+
     private double total_price;
+    private String status;
 
     @ManyToOne
-    @MapsId
     @JoinColumn(name = "user_id")
     private User user;
-    public double getTotal_price() {
-        return total_price;
-    }
 
     @OneToMany(mappedBy = "order")
-    private List <Order_detail> order_details;
+    private List<OrderDetail> order_details;
 
     public void setTotal_price(double total_price) {
         this.total_price = total_price;
+    }
+
+    public double getTotal_price() {
+        return total_price;
     }
 
     @Override
@@ -43,12 +49,28 @@ public class Order extends BaseEntity {
         this.user = user;
     }
 
-    public List<Order_detail> getOrder_details() {
+    public List<OrderDetail> getOrder_details() {
         return order_details;
     }
 
-    public void setOrder_details(List<Order_detail> order_details) {
+    public void setOrder_details(List<OrderDetail> order_details) {
         this.order_details = order_details;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public ConsigneeDTO getConsignee() {
+        return consignee;
+    }
+
+    public void setConsignee(ConsigneeDTO consignee) {
+        this.consignee = consignee;
     }
 
     // user_id

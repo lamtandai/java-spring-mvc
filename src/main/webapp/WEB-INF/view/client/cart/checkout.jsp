@@ -7,7 +7,7 @@
 
                 <head>
                     <meta charset="utf-8">
-                    <title>Verify Checkout</title>
+                    <title>Add product to cart</title>
                     <meta content="width=device-width, initial-scale=1.0" name="viewport">
                     <meta content="" name="keywords">
                     <meta content="" name="description">
@@ -84,15 +84,15 @@
                                             <th scope="col">Price</th>
                                             <th scope="col">Quantity</th>
                                             <th scope="col">Total</th>
-                                            <th scope="col">Handle</th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach var="cartDetail" items="${cartDetails}" varStatus="status">
+                                        <c:forEach var="cartDetail" items="${cart.cartDetails}" varStatus="status">
                                             <tr>
                                                 <th scope="row">
                                                     <div class="d-flex align-items-center">
-                                                        <img src="/images/product/${cartDetail.cartDetailId.product.image}"
+                                                        <img src="/images/product/${cartDetail.getCartDetailId().product.image}"
                                                             class="img-fluid me-5 rounded-circle"
                                                             style="width: 80px; height: 80px;" alt="">
                                                     </div>
@@ -108,28 +108,15 @@
                                                     </p>
                                                 </td>
                                                 <td>
-                                                    <div class="input-group quantity mt-4" style="width: 100px;">
-                                                        <div class="input-group-btn">
-                                                            <button
-                                                                class="btn btn-sm btn-minus rounded-circle bg-light border">
-                                                                <i class="fa fa-minus"></i>
-                                                            </button>
-                                                        </div>
+                                                    <div class=" quantity mt-4" style="width: 100px;">
                                                         <input type="text"
                                                             class="form-control form-control-sm text-center border-0"
                                                             value="${cartDetail.quantity}"
                                                             data-cart-detail-id="${cartDetail.getCartDetailId()}"
                                                             data-cart-detail-price="${cartDetail.price}"
-                                                            data-cart-detail-index="${status.index}">
-                                                            
-                                                        
-                                                        <div class="input-group-btn">
-                                                            <button
-                                                                class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                                                <i class="fa fa-plus"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
+                                                            data-cart-detail-index="${status.index}" readonly="true">
+
+                                                        </input>
                                                 </td>
                                                 <td>
                                                     <p class="mb-0 mt-4"
@@ -138,34 +125,45 @@
                                                             value="${cartDetail.price * cartDetail.quantity}" /> đ
                                                     </p>
                                                 </td>
-                                                <td>
-                                                    <form
-                                                        action="/delete-cart-product/${cartDetail.getCartDetailId().getCart().id}/${cartDetail.getCartDetailId().getProduct().id}"
-                                                        method="post" modelAttribute="cartDetailId">
-                                                        <input type="hidden" name="${_csrf.parameterName}"
-                                                            value="${_csrf.token}" />
 
-                                                        <button type="submit"
-                                                            class="btn btn-md rounded-circle bg-light border mt-4">
-                                                            <i class="fa fa-times text-danger"></i>
-                                                        </button>
-                                                    </form>
-                                                </td>
 
                                             </tr>
                                         </c:forEach>
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="mt-5">
-                                <input type="text" class="border-0 border-bottom rounded me-5 py-3 mb-4"
-                                    placeholder="Coupon Code">
-                                <button class="btn border-secondary rounded-pill px-4 py-3 text-primary"
-                                    type="button">Apply
-                                    Coupon</button>
-                            </div>
+
                             <div class="row g-4 justify-content-end">
                                 <div class="col-8">
+
+                                    <div class="bg-light rounded">
+                                        <h1 class="display-6 mb-4">Consignee's <span
+                                                class="fw-normal">Information</span></h1>
+                                        <div class="justify-content-between mb-4">
+                                            <form:form action="order-verify" method="post" modelAttribute="consignee">
+                                                <label> FullName</label>
+                                                <div class="mb-3">
+                                                    <form:input class="form-control" type="text"
+                                                        value="${user.fullName}" path="fullName" />
+                                                </div>
+                                                <label> Address</label>
+                                                <div class="mb-3">
+                                                    <form:input class="form-control" type="text" value="${user.address}"
+                                                        path="address" />
+                                                </div>
+                                                <label> Phone Number</label>
+                                                <div class="mb-3">
+                                                    <form:input class="form-control" type="text" value="${user.phone}"
+                                                        path="phone" />
+                                                </div>
+                                                <button
+                                                    class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4"
+                                                    type="submit">Verify Checkout
+                                                </button>
+                                            </form:form>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <div class="col-sm-8 col-md-7 col-lg-6 col-xl-4">
                                     <div class="bg-light rounded">
@@ -192,41 +190,8 @@
                                                 <fmt:formatNumber type="number" value="${totalPrice}" /> đ
                                             </p>
                                         </div>
-                                        <form:form action="/purchase-verify" method="post" modelAttribute="purchaseRequestDTO">
-                                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                                            <div style="display: none;">
-                                                <c:forEach var="cartDetail" items="${cartDetails}" varStatus="status">
-                                                    <div class="mb-3">
-                                                        <div class="form-group">
-                                                            <label>Id:</label>
-                                                            <form:input class="form-control" type="text"
-                                                                value="${cartDetail.getCartDetailId().cart.id}"
-                                                                path="cartList[${status.index}].cartId"/>
-                                                        </div>
 
 
-                                                        <div class="form-group">
-                                                            <label>ProductId:</label>
-                                                            <form:input class="form-control" type="text"
-                                                                value="${cartDetail.getCartDetailId().product.id}"
-                                                                path="cartList[${status.index}].productId" />
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label>Quantity:</label>
-                                                            <form:input class="form-control" type="text"
-                                                                value="${cartDetail.quantity}"
-                                                                path="cartList[${status.index}].quantity" />
-                                                        </div>
-                                                    </div>
-                                                </c:forEach>
-                                            </div>
-                                            <button
-                                            class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4"
-                                            type="submit" >Proceed Checkout
-                                        </button>
-                                        </form:form> 
-                                        
                                     </div>
                                 </div>
                             </div>
